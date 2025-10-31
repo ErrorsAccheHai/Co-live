@@ -1,0 +1,45 @@
+:root { --brand: #ff4d4d; }
+
+body { font-family: Arial, sans-serif; padding: 1rem; }
+input, select, textarea { width: 100%; padding: .5rem; margin: .4rem 0; }
+button { padding: .5rem 1rem; margin-top: .6rem; }
+.container { max-width: 700px; margin: 1.5rem auto; }
+
+/* Glass morphism card and hover effects */
+.glass-card {
+	background: rgba(255,255,255,0.85);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255,255,255,0.45);
+	border-radius: 16px;
+	transition: transform .18s ease, box-shadow .18s ease;
+}
+.glass-card:hover {
+	transform: translateY(-6px) scale(1.01);
+	box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+/* Brand buttons */
+.brand-btn {
+	background: var(--brand);
+	color: #fff;
+	border-radius: 10px;
+	border: none;
+	transition: transform .12s ease, box-shadow .12s ease;
+}
+.brand-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(255,77,77,0.22); }
+.brand-outline { border: 2px solid var(--brand); color: var(--brand); border-radius: 10px; background: transparent; }
+
+/* Centering utilities */
+.center-panel { display:flex; align-items:center; justify-content:center; min-height:100vh; }
+
+/* Progress step dot */
+.progress-dot { width:35px; height:35px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition: background .12s ease, transform .12s; }
+.progress-dot.active { background: var(--brand); color: white; transform: translateY(-2px); }
+
+.input-rounded { border-radius:50px; }
+.search-btn-rounded { border-radius:50px !important; }
+
+/* Fix vertical spacing inside card body for more balanced top/bottom padding */
+.card-body { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+
+.text-brand { color: var(--brand); }

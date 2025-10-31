@@ -1,0 +1,77 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+frontend/.env
+backend/.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+*.out
+*.pid
+*.seed
+
+# Build output
+dist/
+build/
+frontend/dist/
+frontend/build/
+backend/dist/
+backend/build/
+
+# Coverage reports
+coverage/
+lcov-report/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.bak
+*.tmp
+*.orig
+*.merge
+*.mongodb
+
+# Runtime data
+pids/
+*.pid.lock
+
+# Local development files
+*.local
+*.envrc
+
+# TypeScript build artifacts
+*.tsbuildinfo
+
+# Lock files (optional — if you use only one package manager, you can uncomment the others)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Temporary folders
+tmp/
+temp/
+
+# Optional: ignore uploaded files if any file uploads handled locally
+uploads/
+public/uploads/
+backend/src/utils/generateToken.js
