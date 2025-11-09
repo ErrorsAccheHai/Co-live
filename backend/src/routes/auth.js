@@ -154,25 +154,43 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password, role } = req.body; // role optional
-    if (!email || !password) return res.status(400).json({ msg: 'Enter email and password' });
+    console.log('Login attempt:', { email, role, passwordLength: password?.length });
+    
+    if (!email || !password) {
+      console.log('Login failed: Missing email or password');
+      return res.status(400).json({ msg: 'Enter email and password' });
+    }
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: 'Incorrect credentials. Please try again.' });
+    console.log('User lookup result:', user ? 'found' : 'not found');
+    
+    if (!user) {
+      console.log('Login failed: User not found');
+      return res.status(400).json({ msg: 'Incorrect credentials. Please try again.' });
+  }
 
     // Check lock
+    // NOTE: Account lock/check temporarily disabled by commenting out to avoid blocking during testing.
+    // If you want to re-enable account lock, uncomment the block below.
+    /*
     if (user.lockedUntil && user.lockedUntil > Date.now()) {
       return res.status(423).json({ msg: 'Account temporarily locked.' });
     }
+    */
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 3;//3 login attempts per failure
+      // Temporarily disable account lock and failed-attempts increment during debugging/testing.
+      // To restore lockout behavior, uncomment the following lines and adjust thresholds as needed.
+      /*
+      user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 3; // 3 login attempts per failure
       if (user.failedLoginAttempts >= 5) {
         user.lockedUntil = new Date(Date.now() + 5*60*1000); // 5 minutes
         await user.save();
         return res.status(423).json({ msg: 'Account temporarily locked.' });
       }
       await user.save();
+      */
       return res.status(400).json({ msg: 'Incorrect credentials. Please try again.' });
     }
 

@@ -6,7 +6,14 @@ module.exports = function(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { userId, role, iat, exp }
+    // Standardize user info for consistent access across routes
+    req.user = {
+      _id: decoded.userId, // Add _id for mongoose compatibility
+      userId: decoded.userId,
+      role: decoded.role,
+      iat: decoded.iat,
+      exp: decoded.exp
+    };
     next();
   } catch (err) {
     res.status(401).json({ msg: 'Token is not valid' });

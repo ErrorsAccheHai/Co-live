@@ -8,6 +8,10 @@ connectDB();
 
 app.use(express.json());
 app.use(cors());
+const path = require('path');
+
+// Serve uploaded files (local fallback for images)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/auth', require('./src/routes/auth'));
 app.use('/api/user', require('./src/routes/user'));

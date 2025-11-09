@@ -1,5 +1,79 @@
 const mongoose = require('mongoose');
 
+const billSchema = new mongoose.Schema({
+    tenant: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    amount: {
+        type: Number,
+        required: true
+    },
+    type: {
+        type: String,
+        enum: ['rent', 'electricity', 'water', 'maintenance', 'other'],
+        required: true
+    },
+    dueDate: {
+        type: Date,
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'paid', 'overdue'],
+        default: 'pending'
+    },
+    paidAt: Date,
+    description: String
+}, {
+    timestamps: true
+});
+
+const issueSchema = new mongoose.Schema({
+    tenant: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'in-progress', 'resolved'],
+        default: 'pending'
+    },
+    priority: {
+        type: String,
+        enum: ['low', 'medium', 'high'],
+        default: 'medium'
+    },
+    resolvedAt: Date,
+    resolvedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    comments: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        text: String,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
+    }]
+}, {
+    timestamps: true
+});
+
 const propertySchema = new mongoose.Schema({
     title: {
         type: String,
@@ -59,7 +133,46 @@ const propertySchema = new mongoose.Schema({
     isAvailable: {
         type: Boolean,
         default: true
-    }
+    },
+    tenants: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        room: {
+            type: String,
+            required: true
+        },
+        rentAmount: {
+            type: Number,
+            required: true
+        },
+        startDate: {
+            type: Date,
+            required: true
+        },
+        endDate: Date,
+        status: {
+            type: String,
+            enum: ['active', 'inactive', 'pending'],
+            default: 'pending'
+        }
+    }],
+    bills: [billSchema],
+    issues: [issueSchema],
+    rules: [{
+        title: String,
+        description: String
+    }],
+    facilities: [{
+        name: String,
+        description: String,
+        isWorking: {
+            type: Boolean,
+            default: true
+        }
+    }]
 }, {
     timestamps: true
 });
