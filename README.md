@@ -39,6 +39,6 @@ Frontend runs on http://localhost:3000 and backend on http://localhost:5000.
 ## Alternate flows handled
 - Invalid email format / missing fields will return 400 with messages.
 - Incorrect credentials returns 400 with message.
-- Account locked after multiple (3) failed attempts (temporary lock).
+- Account locked after multiple (5) failed attempts (temporary lock).
 - Database connection failures will cause server to exit and log an error.
 
