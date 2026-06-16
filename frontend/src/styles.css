@@ -1,45 +1,112 @@
-:root { --brand: #ff4d4d; }
+:root {
+  --brand: #ff4d4d;
+  --brand-dark: #e63c3c;
+  --brand-light: #ffecec;
+}
 
-body { font-family: Arial, sans-serif; padding: 1rem; }
-input, select, textarea { width: 100%; padding: .5rem; margin: .4rem 0; }
-button { padding: .5rem 1rem; margin-top: .6rem; }
-.container { max-width: 700px; margin: 1.5rem auto; }
+body { font-family: Arial, sans-serif; }
 
-/* Glass morphism card and hover effects */
+/* Glass morphism card */
 .glass-card {
-	background: rgba(255,255,255,0.85);
-	backdrop-filter: blur(8px);
-	border: 1px solid rgba(255,255,255,0.45);
-	border-radius: 16px;
-	transition: transform .18s ease, box-shadow .18s ease;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 .glass-card:hover {
-	transform: translateY(-6px) scale(1.01);
-	box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.12);
 }
 
-/* Brand buttons */
+/* Brand primary button */
 .brand-btn {
-	background: var(--brand);
-	color: #fff;
-	border-radius: 10px;
-	border: none;
-	transition: transform .12s ease, box-shadow .12s ease;
+  background: linear-gradient(135deg, var(--brand) 0%, #ff6b6b 100%);
+  color: #fff !important;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  min-height: 42px;
+  padding: 0.55rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
-.brand-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(255,77,77,0.22); }
-.brand-outline { border: 2px solid var(--brand); color: var(--brand); border-radius: 10px; background: transparent; }
+.brand-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255,77,77,0.30);
+  background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
+}
+.brand-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Brand outline button */
+.brand-outline {
+  border: 2px solid var(--brand);
+  color: var(--brand);
+  border-radius: 10px;
+  background: transparent;
+  font-weight: 600;
+  min-height: 42px;
+  padding: 0.55rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s ease, transform 0.12s ease;
+}
+.brand-outline:hover {
+  background: var(--brand-light);
+  transform: translateY(-2px);
+}
+
+/* Text brand color */
+.text-brand { color: var(--brand); }
+
+/* Progress step dots for signup */
+.progress-dot {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e9ecef;
+  color: #999;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 2px solid #dee2e6;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  z-index: 1;
+}
+.progress-dot.active {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+  transform: scale(1.1);
+}
+
+/* Bootstrap form controls — consistent border radius */
+.form-control, .form-select {
+  border-radius: 8px;
+}
+.input-group .form-control, .input-group .form-select {
+  border-radius: 0 8px 8px 0;
+}
+.input-group-text {
+  border-radius: 8px 0 0 8px;
+  background: #f8f9fa;
+  color: var(--brand);
+  border-color: #dee2e6;
+}
+
+/* Fix vertical spacing inside card body */
+.card-body { padding-top: 1.5rem; padding-bottom: 1.5rem; }
 
 /* Centering utilities */
-.center-panel { display:flex; align-items:center; justify-content:center; min-height:100vh; }
-
-/* Progress step dot */
-.progress-dot { width:35px; height:35px; display:flex; align-items:center; justify-content:center; border-radius:50%; transition: background .12s ease, transform .12s; }
-.progress-dot.active { background: var(--brand); color: white; transform: translateY(-2px); }
-
-.input-rounded { border-radius:50px; }
-.search-btn-rounded { border-radius:50px !important; }
-
-/* Fix vertical spacing inside card body for more balanced top/bottom padding */
-.card-body { padding-top: 1.25rem; padding-bottom: 1.25rem; }
-
-.text-brand { color: var(--brand); }
+.center-panel { display: flex; align-items: center; justify-content: center; min-height: 100vh; }

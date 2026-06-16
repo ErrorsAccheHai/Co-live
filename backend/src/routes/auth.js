@@ -122,15 +122,34 @@ router.post('/signup', async (req, res) => {
       email, 
       password: hashed, 
       role,
-      isEmailVerified: true
+      isEmailVerified: true,
+      wallet: {
+        balance: 5000, // Test credit: ₹5000 for all new users
+        currency: 'INR',
+        createdAt: new Date(),
+        lastUpdated: new Date()
+      }
     });
     await user.save();
+
+    // Log initial wallet transaction
+    const WalletTransaction = require('../models/WalletTransaction');
+    await WalletTransaction.create({
+      userId: user._id,
+      type: 'credit',
+      amount: 5000,
+      reason: 'deposit',
+      description: 'Welcome bonus - Test credit for new users',
+      balanceBefore: 0,
+      balanceAfter: 5000,
+      status: 'completed'
+    });
 
     // Delete temporary user
     await TempUser.deleteOne({ email });
 
-    // Generate token
-    const payload = { userId: user._id, role: user.role };
+    // Generate token with name included
+    const payload = { userId: user._id, role: user.role, name: user.name };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { 
       expiresIn: process.env.JWT_EXPIRES_IN 
     });
@@ -141,7 +160,8 @@ router.post('/signup', async (req, res) => {
         id: user._id, 
         name: user.name, 
         email: user.email, 
-        role: user.role 
+        role: user.role,
+        wallet: { balance: 5000, currency: 'INR' }
       } 
     });
   } catch (err) {
@@ -207,7 +227,7 @@ router.post('/login', async (req, res) => {
     user.lockedUntil = null;
     await user.save();
 
-    const payload = { userId: user._id, role: user.role };
+    const payload = { userId: user._id, role: user.role, name: user.name };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
 
     res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });

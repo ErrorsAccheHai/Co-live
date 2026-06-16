@@ -11,6 +11,7 @@ module.exports = function(req, res, next) {
       _id: decoded.userId, // Add _id for mongoose compatibility
       userId: decoded.userId,
       role: decoded.role,
+      name: decoded.name, // Include name from token
       iat: decoded.iat,
       exp: decoded.exp
     };

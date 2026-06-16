@@ -44,3 +44,12 @@ export function getAuthHeader() {
   const token = getToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
+
+// ✅ Centralized logout logic to avoid duplication across NavBar, layouts, sidebars
+export function logout() {
+  removeToken();
+  localStorage.removeItem('colive_user');
+  localStorage.removeItem('afterLogin');
+  // inform all components that auth changed
+  window.dispatchEvent(new Event('authChanged'));
+}

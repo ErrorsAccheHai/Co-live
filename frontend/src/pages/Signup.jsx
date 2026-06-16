@@ -5,6 +5,7 @@ import { FaEnvelope, FaLock, FaUser, FaIdCard, FaPhone } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const API = 'http://localhost:5000/api/auth';
+//const API = 'https://colive-backend-production.up.railway.app/api/auth';
 
 export default function Signup() {
   const nav = useNavigate();
@@ -87,6 +88,11 @@ export default function Signup() {
       setLoading(true);
       const res = await axios.post(`${API}/signup`, form);
       localStorage.setItem('colive_token', res.data.token);
+      if (res.data.user) {
+        localStorage.setItem('colive_user', JSON.stringify(res.data.user));
+      }
+      // notify NavBar and other components
+      window.dispatchEvent(new Event('authChanged'));
       nav('/dashboard');
     } catch (error) {
       setErr(error.response?.data?.msg || 'Signup failed');
@@ -399,10 +405,17 @@ export default function Signup() {
           </div>
         </div>
 
-        {/* Right Panel - Sign Up Form */}
-        <div className="col-md-6 d-flex center-panel">
-          <div className="w-100 p-3 p-md-4" style={{ maxWidth: 680 }}>
-            <div className="card border-0 glass-card" style={{ maxWidth: 600, margin: '0 auto' }}>
+        {/* Right Panel - Sign Up Form (match Login layout) */}
+        <div className="col-md-6 d-flex flex-column justify-content-center align-items-center p-5">
+          <div style={{ width: '100%', maxWidth: 400, marginBottom: 12, display: 'flex', justifyContent: 'flex-start' }}>
+            <Link to="/" className="text-decoration-none d-flex align-items-center" style={{ gap: 8 }}>
+              <span style={{ fontSize: 20 }}>🏠</span>
+              <span className="fw-bold text-brand">Co‑Live</span>
+            </Link>
+          </div>
+
+          <div style={{ width: '100%', maxWidth: 400 }}>
+            <div className="card border-0 glass-card w-100">
               <div className="card-body p-4">
                 <h3 className="text-center mb-4 fw-bold">Create Your Account</h3>
                 

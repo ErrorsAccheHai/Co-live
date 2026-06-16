@@ -93,16 +93,26 @@ const propertySchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        required: true
+        required: false,
+        default: 1
     },
-    bedrooms: {
+    // Rental pricing rates for the booking system
+    pricing: {
+        dailyRate:   { type: Number, default: 0 },
+        monthlyRate: { type: Number, default: 0 },
+        yearlyRate:  { type: Number, default: 0 },
+    },
+    bedrooms: 
+    { type: Number,
+      default: 1,
+      min: 1 },
+    bathrooms: 
+    { 
         type: Number,
-        required: true
+        default: 1,
+         min: 1 
     },
-    bathrooms: {
-        type: Number,
-        required: true
-    },
+
     amenities: [{
         type: String
     }],
@@ -172,7 +182,35 @@ const propertySchema = new mongoose.Schema({
             type: Boolean,
             default: true
         }
+    }],
+    // How many tenants can be hosted simultaneously
+    capacity: {
+        type: Number,
+        default: 1,
+        min: 1
+    },
+    notifications: [{
+        type: { type: String }, // 'rental' | 'purchase' | 'info'
+        message: String,
+        userId: mongoose.Schema.Types.ObjectId,
+        userName: String,
+        userEmail: String,
+        userPhone: String,
+        createdAt: { type: Date, default: Date.now },
+        read: { type: Boolean, default: false }
     }]
+    ,
+    // Reviews and ratings
+    reviews: [{
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        rating: { type: Number, min: 1, max: 5, required: true },
+        comment: String,
+        createdAt: { type: Date, default: Date.now }
+    }],
+    averageRating: { type: Number, default: 0 },
+    totalReviews: { type: Number, default: 0 },
+    // Keep property visible on public listings even if not currently available
+    keepLive: { type: Boolean, default: true }
 }, {
     timestamps: true
 });

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 
-const API = 'http://localhost:5000/api/request';
+const API = `${API_BASE}/api/request`;
 const tokenKey = 'colive_token';
 
 export default function Requests(){
@@ -16,10 +17,16 @@ export default function Requests(){
 
   const getUserRole = async ()=>{
     const token = localStorage.getItem(tokenKey);
-    const res = await axios.get('http://localhost:5000/api/auth/me',{ headers:{ Authorization:`Bearer ${token}` }});
+    //const res = await axios.get('http://localhost:5000/api/auth/me',{ headers:{ Authorization:`Bearer ${token}` }});
+    const res = await axios.get(
+  `${API_BASE}/api/auth/me`,
+  { headers: { Authorization: `Bearer ${token}` } }
+);
+
     setRole(res.data.role);
     loadRequests(res.data.role);
   };
+  
 
   const loadRequests = async (r)=>{
     const token = localStorage.getItem(tokenKey);

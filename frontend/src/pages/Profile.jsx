@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../config';
 
-const API = 'http://localhost:5000/api/user';
+const API = `${API_BASE}/api/user`;
 const tokenKey = 'colive_token';
 
 export default function Profile(){
