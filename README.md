@@ -18,6 +18,7 @@ cd backend
 npm install
 cp .env.example .env
 # edit .env and replace <db_password> with your password (URL-encode special chars)
+for the first time user admin have to seed deatils manually there is option for crating account only for user and Landlord so, to access admin featuer you need to seed admin manually
 npm run dev
 ```
 
@@ -39,6 +40,6 @@ Frontend runs on http://localhost:3000 and backend on http://localhost:5000.
 ## Alternate flows handled
 - Invalid email format / missing fields will return 400 with messages.
 - Incorrect credentials returns 400 with message.
-- Account locked after multiple (3) failed attempts (temporary lock).
+- Account locked after multiple (5) failed attempts (temporary lock).
 - Database connection failures will cause server to exit and log an error.
 
